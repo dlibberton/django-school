@@ -14,4 +14,7 @@ class SubjectSerializer(serializers.ModelSerializer):
     
     def get_grade_average(self, obj):
         grades = obj.grades.all()
-        return round(sum([x.grade for x in grades])/len(grades),2)
+        if grades:  # Check if grades is not empty
+            return round(sum([x.grade for x in grades]) / len(grades), 2)
+        else:
+            return 0

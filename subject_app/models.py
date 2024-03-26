@@ -1,10 +1,16 @@
 from django.db import models
 from .validators import validate_professor_name, validate_subject_format
 
+
+# Create your models here.
 class Subject(models.Model):
-    subject_name = models.CharField(max_length=255, unique=True, validators=[validate_subject_format])
-    professor = models.CharField(max_length=255, default="Mr. Cahan", validators=[validate_professor_name])
-    students = models.ManyToManyField('Student', related_name='subjects', blank=True)
+    subject_name = models.CharField(
+        blank=False, null=False, unique=True, validators=[validate_subject_format]
+    )
+    professor = models.CharField(
+        blank=False, null=False, validators=[validate_professor_name]
+    )
+    # related field students mtm field from Student model
 
     def __str__(self):
         return f"{self.subject_name} - {self.professor} - {self.students.count()}"
